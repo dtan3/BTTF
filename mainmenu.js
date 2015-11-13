@@ -8,9 +8,10 @@ console.log('game is...', game.load);
 var mainMenu = {
     preload: function () {
         setTimeout(function() {
+            console.log('set timeout function');
             game.load.image('title','images/Title.png');
             game.load.image('car','images/car.png');
-        }, 10);
+        }, 1000);
         
     },
     create: function () {    
@@ -25,16 +26,13 @@ var mainMenu = {
         function buttonCallback(event, btn) {
             console.log('event', event);
             console.log('button', btn);
-            console.log("hello!");
         };
-        var car = game.add.sprite(game.world.position.x=6,game.world.position.y=20,'car');
-        car.scale.setTo(0.5);
+        
+        this.car = game.add.sprite(game.world.position.x=6,game.world.position.y=20,'car');
+        this.car.scale.setTo(0.5);
 
-        var title= game.add.sprite(game.world.position.x=0,game.world.position.y=80,'title');
-        title.scale.setTo(0.275);
-        
-        
-    
+        this.title = game.add.sprite(game.world.position.x=0,game.world.position.y=80,'title');
+        this.title.scale.setTo(0.275);
     },
     update: function () {
     }
