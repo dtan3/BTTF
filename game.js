@@ -3,13 +3,18 @@ var positionClouds=function(top){
     //positions the clouds randomnly
     positionClouds(top);
 }
-var game = {
+var game2 = {
     preload: function () {
-    game.load.image('road','images/Road.png');
-    game.load.image('player','images/MartySprite.gif');
-    game.load.image('clouds','images/cloudsprite.png');
-    game.load.image('background','images/background.png');
-    game.load.image('tree','images/tree.png');
+        setTimeout(loadImages, 200);
+        
+        var loadImages = function() {
+            game.load.image('road','images/Road.png');
+            game.load.image('player','images/MartySprite.gif');
+            game.load.image('clouds','images/cloudsprite.png');
+            game.load.image('background','images/background.png');
+            game.load.image('tree','images/tree.png');
+        }
+        
     },
     create: function () {       
         game.stage.backgroundColor = '#80BFFF';
@@ -59,8 +64,8 @@ var game = {
     }
 };
 
-// And finally we tell Phaser to add and start our 'main' state
-
+// And finally we tell Phaser to add a new game;
+window.game = new Phaser.Game(640, 480, Phaser.AUTO, 'gameDiv');
 
 
 

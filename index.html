@@ -9,14 +9,18 @@
             <h1 class="title"></h1>
         </header>
         <div id="gameDiv" class="game-area"></div>
+        <img id="start-button" src="images/startButton.png"> </img>
         <script src="phaser.js"></script>
         <script src="game.js"></script>
         <script src="mainmenu.js"></script>
         <script> 
-            var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gameDiv');
-            game.state.add('main',main);
-                 game.state.add('game',game);
-                 game.state.start('main');</script>
+            game.state.add('mainMenu',mainMenu);
+            game.state.add('game',game);
+            game.state.start('mainMenu');
+            mainMenu.preload();                    
+        </script>
+        
+        
     
     </body>
 </html>
