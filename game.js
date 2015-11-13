@@ -10,6 +10,7 @@ var game2 = {
             game.load.image('clouds','images/cloudsprite.png');
             game.load.image('background','images/background.png');
             game.load.image('tree','images/tree.png');
+            game.load.image('cone','images/cone.png');
     },
     create: function () {       
         game.stage.backgroundColor = '#80BFFF';
@@ -18,6 +19,11 @@ var game2 = {
         this.bg=game.add.tileSprite(0,0,game.world.width,game.world.height,'road');
         this.bg.tileScale.set(0.5);
         
+        //Cones
+        for ( var i = 0; i < 10; i++ ) {
+        var cone1=game.add.sprite(game.world.position.x = 100 + i*100,game.world.position.y=295,'cone');
+        cone1.scale.setTo(0.1);
+        };
         //tree
         var tree=game.add.sprite(game.world.position.x=50,game.world.position.y=275,'tree');
         console.log(game.world);
