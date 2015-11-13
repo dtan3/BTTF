@@ -25,9 +25,9 @@ var mainMenu = {
         function buttonCallback(event, btn) {
             console.log('event', event);
             console.log('button', btn);
+            console.log("hello!");
         };
-        var 
-        car = game.add.sprite(game.world.position.x=6,game.world.position.y=20,'car');
+        var car = game.add.sprite(game.world.position.x=6,game.world.position.y=20,'car');
         car.scale.setTo(0.5);
 
         var title= game.add.sprite(game.world.position.x=0,game.world.position.y=80,'title');
