@@ -5,16 +5,11 @@ var positionClouds=function(top){
 }
 var game2 = {
     preload: function () {
-        setTimeout(loadImages, 200);
-        
-        var loadImages = function() {
             game.load.image('road','images/Road.png');
             game.load.image('player','images/MartySprite.gif');
             game.load.image('clouds','images/cloudsprite.png');
             game.load.image('background','images/background.png');
             game.load.image('tree','images/tree.png');
-        }
-        
     },
     create: function () {       
         game.stage.backgroundColor = '#80BFFF';
