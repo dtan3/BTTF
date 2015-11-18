@@ -11,13 +11,18 @@ var game2 = {
             game.load.image('background','images/background.png');
             game.load.image('tree','images/tree.png');
             game.load.image('cone','images/cone.png');
+            game.load.image('biff','images/biff.gif');
     },
     create: function () {       
         game.stage.backgroundColor = '#80BFFF';
-        game.add.tileSprite(0,25,1100,1000,'background');
+        this.background = game.add.tileSprite(0,25,1100,1000,'background');
         game.physics.arcade.gravity.y = 100;
         this.bg=game.add.tileSprite(0,0,game.world.width,game.world.height,'road');
         this.bg.tileScale.set(0.5);
+        
+        //Biff
+        var biff = game.add.sprite(game.world.position.x = 10, game.world.position.y=410,'biff');
+        biff.scale.setTo(0.625);
         
         //Cones
         for ( var i = 0; i < 10; i++ ) {
@@ -25,9 +30,11 @@ var game2 = {
         cone1.scale.setTo(0.1);
         };
         //tree
-        var tree=game.add.sprite(game.world.position.x=50,game.world.position.y=275,'tree');
+        for (var z= 0; z < 10; z++){
+        var tree=game.add.sprite(game.world.position.x=50 + z*100,game.world.position.y=275,'tree');
         console.log(game.world);
         tree.scale.setTo(0.10,0.10);
+        };
         
         //Cloud #1,2,3,4
         var cloud= game.add.sprite(game.world.position.x=50,game.world.position.y=10,'clouds');
@@ -41,9 +48,9 @@ var game2 = {
         cloud4.scale.setTo(0.16,0.16);
         
         //Position of player
-        player = game.add.sprite(game.world.position.x=20,game.world.position.y=320,'player'); 
+        player = game.add.sprite(game.world.position.x=100,game.world.position.y=320,'player'); 
         console.log(game.world);
-        player.scale.setTo(2,2);
+        player.scale.setTo(1.8,1.8);
         game.physics.enable(player);
         game.physics.arcade.gravity.y = 450;
         
@@ -54,6 +61,9 @@ var game2 = {
         //Jumping
         this.spaceKey=game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+        
+
+        
 
         
     },
@@ -62,6 +72,8 @@ var game2 = {
             player.body.velocity.y=-230;
        
         }
+        this.bg.tilePosition.x-=10;
+        this.background.tilePosition.x-=5;
     }
 };
 

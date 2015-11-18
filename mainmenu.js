@@ -4,7 +4,6 @@ var positionClouds=function(top){
     positionClouds(top);
 }
 var car;
-console.log('game is...', game.load);
 
 var mainMenu = {
     preload: function () {
