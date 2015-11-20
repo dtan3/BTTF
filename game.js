@@ -3,6 +3,9 @@ var positionClouds=function(top){
     //positions the clouds randomnly
     positionClouds(top);
 }
+
+
+
 var game2 = {
     preload: function () {
             game.load.image('road','images/Road.png');
@@ -12,6 +15,7 @@ var game2 = {
             game.load.image('tree','images/tree.png');
             game.load.image('cone','images/cone.png');
             game.load.image('biff','images/biff.gif');
+            game.load.image('box','images/Box.png');
     },
     create: function () {       
         game.stage.backgroundColor = '#80BFFF';
@@ -19,6 +23,7 @@ var game2 = {
         game.physics.arcade.gravity.y = 100;
         this.bg=game.add.tileSprite(0,0,game.world.width,game.world.height,'road');
         this.bg.tileScale.set(0.5);
+        
         
         //Biff
         var biff = game.add.sprite(game.world.position.x = 10, game.world.position.y=410,'biff');
@@ -32,9 +37,14 @@ var game2 = {
         //tree
         for (var z= 0; z < 10; z++){
         var tree=game.add.sprite(game.world.position.x=50 + z*100,game.world.position.y=275,'tree');
-        console.log(game.world);
         tree.scale.setTo(0.10,0.10);
         };
+        
+        for( var q = 0; q < 3; q++ ) {
+        var box = game.add.sprite(game.world.position.x = game.rnd.integerInRange(50,600),game.world.position.y = 410, 'box');
+            box.scale.setTo(0.07);
+        }
+    
         
         //Cloud #1,2,3,4
         var cloud= game.add.sprite(game.world.position.x=50,game.world.position.y=10,'clouds');
@@ -61,8 +71,6 @@ var game2 = {
         //Jumping
         this.spaceKey=game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
-        
-
         
 
         
