@@ -1,4 +1,8 @@
 var player;
+var music;
+var box;
+var box2;
+var box3;
 var positionClouds=function(top){
     //positions the clouds randomnly
     positionClouds(top);
@@ -16,14 +20,21 @@ var game2 = {
             game.load.image('cone','images/cone.png');
             game.load.image('biff','images/biff.gif');
             game.load.image('box','images/Box.png');
+            game.load.audio('music','images/BTTFmusic.mp3');
     },
-    create: function () {       
+    create: function () { 
+        
+        game.physics.startSystem(Phaser.Physics.ARCADE);
         game.stage.backgroundColor = '#80BFFF';
         this.background = game.add.tileSprite(0,25,1100,1000,'background');
         game.physics.arcade.gravity.y = 100;
         this.bg=game.add.tileSprite(0,0,game.world.width,game.world.height,'road');
         this.bg.tileScale.set(0.5);
         
+        //Music
+        music=game.add.audio('music');
+        
+        music.play();
         
         //Biff
         var biff = game.add.sprite(game.world.position.x = 10, game.world.position.y=410,'biff');
@@ -40,11 +51,11 @@ var game2 = {
         tree.scale.setTo(0.10,0.10);
         };
         
-        for( var q = 0; q < 3; q++ ) {
-        var box = game.add.sprite(game.world.position.x = game.rnd.integerInRange(50,600),game.world.position.y = 410, 'box');
-            box.scale.setTo(0.07);
-        }
-    
+        box = game.add.sprite(500,420, 'box');
+        box.scale.setTo(0.06);
+        
+        box2 = game.add.sprite(700,420, 'box');
+        box2.scale.setTo(0.06);
         
         //Cloud #1,2,3,4
         var cloud= game.add.sprite(game.world.position.x=50,game.world.position.y=10,'clouds');
@@ -62,11 +73,16 @@ var game2 = {
         console.log(game.world);
         player.scale.setTo(1.8,1.8);
         game.physics.enable(player);
-        game.physics.arcade.gravity.y = 450;
+        game.physics.arcade.gravity.y = 570;
+        game.physics.enable(box);
+        game.physics.enable(box2);
+        box2.body.allowGravity = false;
+        box.body.allowGravity = false;
+
         
         //boundaries
         player.body.collideWorldBounds = true;
-        
+        //box.body.collideWorldBounds = true;
         
         //Jumping
         this.spaceKey=game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -76,12 +92,24 @@ var game2 = {
         
     },
     update: function () {
-        if(this.spaceKey.justDown && player.position.y>300){
-            player.body.velocity.y=-230;
+        if(this.spaceKey.justDown && player.position.y>380 || player.position.x === box.position.x || player.position.x === box2.position.x){
+            player.body.velocity.y=-290;
        
         }
+        
+        box.body.velocity.x = -500;
+        box2.body.velocity.x = -500;
+        
         this.bg.tilePosition.x-=10;
         this.background.tilePosition.x-=5;
+        
+        if(box.position.x < -200 ) {
+            box.position.x = game.rnd.integerInRange(700, 900);
+        }
+        
+        if(box2.position.x < -200 ) {
+            box2.position.x = game.rnd.integerInRange(700, 900);
+        }
     }
 };
 
