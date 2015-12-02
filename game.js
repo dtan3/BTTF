@@ -1,8 +1,13 @@
 var player;
 var music;
+var biff;
 var box;
 var box2;
 var box3;
+var timer;
+var text;
+var score = 0;
+
 var positionClouds=function(top){
     //positions the clouds randomnly
     positionClouds(top);
@@ -24,6 +29,13 @@ var game2 = {
     },
     create: function () { 
         
+        game.world.resize(900,480);
+        game.camera.x = 100;
+        
+        timer = game.time.create(false);
+        timer.loop(1000, updateScore, this);
+        timer.start();
+        
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.stage.backgroundColor = '#80BFFF';
         this.background = game.add.tileSprite(0,25,1100,1000,'background');
@@ -37,7 +49,7 @@ var game2 = {
         music.play();
         
         //Biff
-        var biff = game.add.sprite(game.world.position.x = 10, game.world.position.y=410,'biff');
+        var biff = game.add.sprite(game.world.position.x = 110, game.world.position.y=410,'biff');
         biff.scale.setTo(0.625);
         
         //Cones
@@ -69,49 +81,74 @@ var game2 = {
         cloud4.scale.setTo(0.16,0.16);
         
         //Position of player
-        player = game.add.sprite(game.world.position.x=100,game.world.position.y=320,'player'); 
+        player = game.add.sprite(game.world.position.x=200,game.world.position.y=320,'player'); 
         console.log(game.world);
         player.scale.setTo(1.8,1.8);
         game.physics.enable(player);
         game.physics.arcade.gravity.y = 570;
         game.physics.enable(box);
         game.physics.enable(box2);
-        box2.body.allowGravity = false;
-        box.body.allowGravity = false;
-
+        game.physics.enable(biff);
+        box2.body.allowGravity = true;
+        box.body.allowGravity = true;
+        box.body.gravity.y = 10000000;
+        box2.body.gravity.y = 10000000;
         
         //boundaries
         player.body.collideWorldBounds = true;
-        //box.body.collideWorldBounds = true;
+        box.body.collideWorldBounds = true;
+        box2.body.collideWorldBounds = true;
+        biff.body.collideWorldBounds = true;
         
         //Jumping
         this.spaceKey=game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
         
-
+        cursors = game.input.keyboard.createCursorKeys();
+        
+        text = game.add.text(100,100,'Score: ' + score);
         
     },
+    
     update: function () {
-        if(this.spaceKey.justDown && player.position.y>380 || player.position.x === box.position.x || player.position.x === box2.position.x){
-            player.body.velocity.y=-290;
-       
+        if(this.spaceKey.justDown && player.position.y  === 393.6){
+            player.body.velocity.y=-350;
         }
         
-        box.body.velocity.x = -500;
-        box2.body.velocity.x = -500;
+        if(cursors.right.isDown) {
+            player.body.velocity.x = 200;
+        }
+        
+        if(cursors.left.isDown) {
+            player.body.velocity.x = -200
+        }
+        
+        box.body.velocity.x = -300;
+        box2.body.velocity.x = -300;
         
         this.bg.tilePosition.x-=10;
         this.background.tilePosition.x-=5;
         
-        if(box.position.x < -200 ) {
-            box.position.x = game.rnd.integerInRange(700, 900);
+        if(box.position.x === 0 ) {
+            box.position.x = game.rnd.integerInRange(700, 1000);
         }
         
-        if(box2.position.x < -200 ) {
-            box2.position.x = game.rnd.integerInRange(700, 900);
+        if(box2.position.x === 0 ) {
+            box2.position.x = game.rnd.integerInRange(700, 1000);
         }
+        
+        game.physics.arcade.collide(player, box);
+        game.physics.arcade.collide(player, box2);
+        
+        game.physics.arcade.collide(player,biff);
+        
     }
 };
+
+function updateScore() {
+    score++;
+    text.text = 'Score: ' + score;
+}
 
 // And finally we tell Phaser to add a new game;
 window.game = new Phaser.Game(640, 480, Phaser.AUTO, 'gameDiv');
