@@ -33,7 +33,7 @@ var game2 = {
         game.camera.x = 100;
         
         timer = game.time.create(false);
-        timer.loop(1000, updateScore, this);
+        timer.loop(500, updateScore, this);
         timer.start();
         
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -49,7 +49,7 @@ var game2 = {
         music.play();
         
         //Biff
-        var biff = game.add.sprite(game.world.position.x = 110, game.world.position.y=410,'biff');
+        biff = game.add.sprite(game.world.position.x = 110, game.world.position.y=410,'biff');
         biff.scale.setTo(0.625);
         
         //Cones
@@ -130,17 +130,20 @@ var game2 = {
         this.background.tilePosition.x-=5;
         
         if(box.position.x === 0 ) {
-            box.position.x = game.rnd.integerInRange(700, 1000);
+            box.position.x = game.rnd.integerInRange(700, 1200);
         }
         
         if(box2.position.x === 0 ) {
-            box2.position.x = game.rnd.integerInRange(700, 1000);
+            box2.position.x = game.rnd.integerInRange(700, 1200);
         }
         
-        game.physics.arcade.collide(player, box);
-        game.physics.arcade.collide(player, box2);
-        
-        game.physics.arcade.collide(player,biff);
+        game.physics.arcade.collide(player, box, endGame);
+        game.physics.arcade.collide(player, box2, endGame);
+        game.physics.arcade.collide(player,biff,endGame);
+        function endGame(){
+            if(player.position.y>344)
+                game.state.start('end');end.preload();
+        };
         
     }
 };

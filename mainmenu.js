@@ -31,7 +31,6 @@ var mainMenu = {
         startButton.inputEnabled=true;
         startButton.events.onInputDown.add(listener,this);
         function listener(){
-            console.log("Image Clicked");
             game.state.start('game');
             game2.preload();
         };
